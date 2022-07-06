@@ -1,6 +1,6 @@
 
 server:
-  port: 8000
+  port: 8001
 
 eureka:
   server:
@@ -13,7 +13,7 @@ eureka:
 
 spring:
   application:
-    name: dafaultgateway
+    name: boardgateway
   cloud:
     gateway:
       globalcore:
@@ -28,65 +28,31 @@ spring:
             allowedOrigins:
               - "http://localhost:3000"
             allowedHeaders: "*"
-      default-filters:
-        - name: GlobalFilter
-          args:
-            baseMessage: hello-world
-            preLogger: false
-            postLogger: true
+
       routes:
-        - id: userServiceLogin
-          uri: lb://USERSERVICE
+        # boardCUD
+        # 게시글 수정하기
+        - id: boardServiceU
+          uri: lb://BOARDSERVICE
           predicates:
-            - Path=/user/login
-            - Method=POST
-          filters:
-            - CustomFilter
-        - id: userServiceMe
-          uri: lb://USERSERVICE
-          predicates:
-            - Path=/user/me
-            - Method=GET
-          filters:
-            - CustomFilter
-        - id: cafeServiceMy
-          uri: lb://CAFESERVICE
-          predicates:
-            - Path=/cafe/my
-            - Method=GET
-        # 카테고리 전체 조회
-        - id: categoryService
-          uri: lb://CATEGORYSERVICE
-          predicates:
-            - Path=/category
-            - Method=GET
-        # 특정 카테고리 조회(Id 사용)
-        - id: categoryServiceR
-          uri: lb://CATEGORYSERVICE
-          predicates:
-            - Path=/category/**
-            - Method=GET
-        # 카테고리 삭제(Id 사용)
-        - id: categoryServiceD
-          uri: lb://CATEGORYSERVICE
-          predicates:
-            - Path=/category/**
-            - Method=DELETE
-        # 카테고리 등록
-        - id: categoryServiceC
-          uri: lb://CATEGORYSERVICE
-          predicates:
-            - Path=/category
-            - Method=POST
-        # 카테고리 수정
-        - id: categoryServiceU
-          uri: lb://CATEGORYSERVICE
-          predicates:
-            - Path=/category/**
+            - Path=/board/**
             - Method=PUT
+        # 게시글 삭제
+        - id: boardServiceD
+          uri: lb://BOARDSERVICE
+          predicates:
+            - Path=/board/**
+            - Method=DELETE
+        # 게시글 추가
+        - id: boardServiceC
+          uri: lb://BOARDSERVICE
+          predicates:
+            - Path=/board/**
+            - Method=POST
+        # boardR
 
 
-#   Netty started on port 8000
+#   Netty started on port 8001
 #  Netty ? ????
 management:
   endpoints:
