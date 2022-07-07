@@ -18,9 +18,9 @@ import java.util.Date;
 @Service
 @Slf4j
 public class SecurityService {
-    @Value("${jwt.secret_key}")
+    @Value("${token.secret}")
     String SECRET_KEY="";
-    @Value("${jwt.expTime}")
+    @Value("${token.expiration_time}")
     long expTime;
     public String createToken(String subject){
         log.info(SECRET_KEY);

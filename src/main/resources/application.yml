@@ -50,6 +50,16 @@ spring:
             - Path=/board/**
             - Method=POST
         # boardR
+        - id: boardServiceR
+          uri: lb://BOARDRSERVICE
+          predicates:
+            - Path=/board/**
+            - Method=GET
+        - id: boardServiceR
+          uri: lb://BOARDRSERVICE
+          predicates:
+            - Path=/board/**
+            - Method=GET
 
 
 #   Netty started on port 8001
@@ -59,9 +69,3 @@ management:
     web:
       exposure:
         include: refresh, health, beans, httptrace
-token:
-  secret: user_token
-
-jwt:
-  secret_key: asdfghjkl
-  expTime: 864000000
